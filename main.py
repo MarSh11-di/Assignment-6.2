@@ -1,5 +1,5 @@
 import csv
-from convertor import temperature as temp
+from convertor import temperature as temp, distance as dist
 
 def rider_file(file_str:str, target_temp:str):
    with open(file_str,"r") as file:
@@ -24,7 +24,7 @@ def rider_file(file_str:str, target_temp:str):
       writer.writeheader()
       for row in temp_list:
          writer.writerow(row)
-# rider_file("data_temper.csv","C")   
+rider_file("data_temper.csv","C")   
 
 def convert_units(file_data:str, name_unit:str):
    with open(file_data, "r") as file:
@@ -34,14 +34,14 @@ def convert_units(file_data:str, name_unit:str):
          if name_unit == "ft":
             if name_unit not in row["Distance"]:
                number = int(row["Distance"][:-1])
-               convert_num = str(temp.feet(number))+"ft"
+               convert_num = str(dist.to_feet(number))+"ft"
                dist_list.append({"Date": row["Date"],"Distance":convert_num, "Reading":row['Reading']})
             else:
                dist_list.append({"Date": row["Date"],"Distance":row["Distance"], "Reading":row['Reading']})
          elif name_unit == "m":
             if name_unit not in row["Distance"]:
                number = int(row["Distance"][:-2])
-               convert_num = str(temp.meters(number))+"m"
+               convert_num = str(dist.to_meters(number))+"m"
                dist_list.append({"Date": row["Date"],"Distance":convert_num, "Reading":row['Reading']})
             else:
                dist_list.append({"Date": row["Date"],"Distance":row["Distance"], "Reading":row['Reading']})
